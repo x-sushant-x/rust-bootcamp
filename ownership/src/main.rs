@@ -28,8 +28,14 @@ fn main() {
     println!("generated string: {generated_string}");
 
     let s4 = add_to_string(s2);
-    println!("s4: {s4}")
+    println!("s4: {s4}");
 
+    let mut x1 = String::from("Hello World");
+    print_via_ref(&x1);
+
+    mutate_via_ref(&mut x1);
+
+    println!("x1 is: {x1}");
 }
 
 fn print_string(a: String) {
@@ -43,4 +49,13 @@ fn generate_str() -> String {
 fn add_to_string(mut a: String) -> String {
     a.push_str(" is awesome.");
     a
+}
+
+fn print_via_ref(a : &String) {
+    println!("print_via_ref a: {a}")
+}
+
+fn mutate_via_ref(a: &mut String) {
+    // (*a).push_str(string);
+    a.push_str(" pushed");
 }
