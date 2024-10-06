@@ -47,8 +47,65 @@ fn main() {
     for c in hindi.chars() {
         println!("{c}")
     }
+
+    let mut book = Product {
+        name: "Book".to_string(),
+        price: 249.99,
+        in_stock: true
+    };
+
+    println!("book: {:?}", book);
+
+    let sales_tax = book.calculate_tax();
+    println!("sales tax: {sales_tax}");
+    
+    book.set_price(1.2);
+    book.buy();
+
+    // book.set_price(1.2);
+
+    let sword = Product::new("Sword".to_string(), 12.9, true);
+    sword.print();
 }
 
 fn trim_tweet(tweet: &str) -> &str {
     &tweet[..15]
+}
+
+#[derive(Debug)]
+struct Product {
+    name: String,
+    price: f32,
+    in_stock: bool
+}
+
+impl Product {
+    fn new(name: String, price: f32, in_stock: bool) -> Product {
+        Product{
+            name,
+            price,
+            in_stock
+        }
+    }
+
+    // &self -> reference to Product
+    fn calculate_tax(&self) -> f32 {
+        return self.price * 0.1
+    }
+
+    // mutable reference to Product
+    fn set_price(&mut self, price: f32) {
+        self.price = price;
+    }
+
+    // self -> Owned form of Product. If this function is called it will be moved and can't be used by anyone afterwords.
+    fn buy(self) -> i32 {
+        let name = self.name;
+        println!("bought book with name: {name}");
+        123
+    }
+
+    fn print(&self) {
+        println!("{:?}", self)
+    }
 }
