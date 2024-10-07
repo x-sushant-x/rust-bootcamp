@@ -1,4 +1,6 @@
-#[derive(Debug)]
+use serde::Serialize;
+
+#[derive(Debug, Serialize)]
 enum Command {
     Undo,
     Redo,
@@ -7,6 +9,13 @@ enum Command {
     Replace {
         from: String,
         to: String
+    }
+}
+
+impl Command {
+    fn serialize(&self) -> String {
+        let result = serde_json::to_string(self).unwrap();
+        result
     }
 }
 
@@ -26,4 +35,7 @@ fn main() {
     println!("{:?}", add_text);
     println!("{:?}", move_cursor);
     println!("{:?}", replace);
+
+    let serialized_command = replace.serialize();
+    println!("serialized_command: {serialized_command}");
 }
