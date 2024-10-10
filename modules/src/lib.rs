@@ -1,33 +1,18 @@
 #[allow(dead_code, unused)]
 
-mod db {
-    pub enum Status {
-        CONNECTED,
-        DISCONNECTED
-    }
+mod database;
+mod auth_utils;
 
-
-    pub fn connect_to_database() -> Status {
-        Status::CONNECTED
-    }
-}
-
-mod auth_utils {
-    pub struct Credentials {
-        username: String,
-        password: String
-    }
     
-    
-    pub fn login(creds: Credentials) {
-        println!("User Logged In")
-    }
-}
 
+
+use crate::auth_utils::login;
+use crate::database::connect_to_database;
+use crate::database::Status;
 
 fn authenticate(creds: auth_utils::Credentials) {
-    if let db::Status::CONNECTED = db::connect_to_database() {
+    if let Status::CONNECTED = connect_to_database() {
         println!("Connected to database");
-        auth_utils::login(creds);
+        login(creds);
     }
 }
